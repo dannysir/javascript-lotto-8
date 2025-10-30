@@ -1,5 +1,3 @@
-import App from '../src/App.js';
-import { getLogSpy, mockQuestions, mockRandoms } from './helpers/mockUtils.js';
 import { runWithInput } from './helpers/testUtils.js';
 
 describe('로또 테스트', () => {

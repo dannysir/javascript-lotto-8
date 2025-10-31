@@ -5,7 +5,7 @@ export class Lotto {
 
   constructor(numbers) {
     this.#validate(numbers);
-    this.#numbers = numbers.sort((a,b) => a - b);
+    this.#numbers = numbers.sort((a, b) => a - b);
   }
 
   #validate(numbers) {
@@ -16,5 +16,13 @@ export class Lotto {
 
   getNumbers() {
     return [...this.#numbers];
+  }
+
+  check(duplicate, bonus) {
+    const count = this.#numbers.reduce((acc, cur) => {
+      return duplicate.has(cur) ? acc + 1 : acc;
+    }, 0);
+    const isBonus = this.#numbers.includes(bonus);
+    return [count, isBonus];
   }
 }

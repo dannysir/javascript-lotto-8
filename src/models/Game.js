@@ -14,8 +14,12 @@ export class Game {
 
   setBonusNumber(bonus) {
     this.#validateNumber(bonus, true);
-    this.#bonus = bonus;
-    this.#duplicate.add(bonus);
+    this.#bonus = +bonus;
+    this.#duplicate.add(+bonus);
+  }
+
+  getResult() {
+    return [new Set(this.#duplicate), this.#bonus];
   }
 
   #validateLotto(winArr) {

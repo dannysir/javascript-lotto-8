@@ -27,7 +27,7 @@ describe('User 모델', () => {
   });
 
   test('로또 결과 반환', () => {
-    const money = 5_000;
+    const money = '5000';
     const lottoWinNum = '1,2,3,4,5,6';
     const bonusNum = '45';
     const randoms = [
@@ -39,11 +39,12 @@ describe('User 모델', () => {
     ];
     mockRandoms(randoms);
 
-    const game = new Game(lottoWinNum, bonusNum);
+    const game = new Game(lottoWinNum);
+    game.setBonusNumber(bonusNum);
     const user = new User(money);
     user.buyLotto();
 
-    expect(user.result(...game.getWinNumber())).toEqual([1, 1, 0, 1, 0]);
+    expect(user.result(...game.getResult())).toEqual([1, 1, 0, 1, 0]);
   });
 });
 

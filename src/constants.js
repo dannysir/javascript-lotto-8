@@ -29,3 +29,5 @@ export const ERROR = {
 export const MIN_MONEY = 1_000;
 
 export const DEFAULT_DELIMITER = ',';
+
+export const RESULT_SIZE = 5;

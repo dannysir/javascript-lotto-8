@@ -16,9 +16,9 @@ export default class App {
       const game = new Game(input2);
       const input3 = await readInput(INPUT_QUESTION.THIRD);
       game.setBonusNumber(input3);
-      const resultArr = user.result(...game.getResult());
+      const [resultArr, profit] = user.result(...game.getResult());
 
-      outputResultReport(resultArr);
+      outputResultReport(resultArr, profit);
 
     } catch (error) {}
   }

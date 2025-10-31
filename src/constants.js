@@ -6,15 +6,17 @@ export const INPUT_QUESTION = {
 
 export const OUTPUT = {
   BUY_RESULT: '개를 구매했습니다.\n',
-  RESULT_REPORT: '\n당첨 통계\n---\n',
+  RESULT_REPORT: '\n당첨 통계\n---',
 };
 
+export const REWARDS = [2_000_000_000, 30_000_000, 1_500_000, 50_000, 5_000];
+
 export const OUTPUT_REPORT = [
-  '6개 일치 (2,000,000,000원) - ',
-  '5개 일치, 보너스 볼 일치 (30,000,000원) - ',
-  '5개 일치 (1,500,000원) - ',
-  '4개 일치 (50,000원) - ',
-  '3개 일치 (5,000원) - ',
+  `6개 일치 (${REWARDS[0].toLocaleString()}원) - `,
+  `5개 일치, 보너스 볼 일치 (${REWARDS[1].toLocaleString()}원) - `,
+  `5개 일치 (${REWARDS[2].toLocaleString()}원) - `,
+  `4개 일치 (${REWARDS[3].toLocaleString()}원) - `,
+  `3개 일치 (${REWARDS[4].toLocaleString()}원) - `,
 ];
 
 export const EMPTY = '';
@@ -37,3 +39,7 @@ export const DELIMITER = {
 };
 
 export const RESULT_SIZE = 5;
+
+export const OUTPUT_PROFIT = (profit) => {
+  return `총 수익률은 ${profit.toLocaleString()}%입니다.`
+};

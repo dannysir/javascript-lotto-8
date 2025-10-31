@@ -1,6 +1,6 @@
 import { Random } from '@woowacourse/mission-utils';
 import Lotto from './Lotto.js';
-import { ERROR, MIN_MONEY, RESULT_SIZE } from '../constants.js';
+import { ERROR, MIN_MONEY, RESULT_SIZE, REWARDS } from '../constants.js';
 
 export default class User {
   #money;
@@ -25,7 +25,7 @@ export default class User {
       const rank = this.#checkRank(count, isBonus);
       if (rank) resultArr[rank - 1]++;
     });
-    return resultArr;
+    return [resultArr, this.#calculateProfit(resultArr)];
   }
 
   #buyLotto() {
@@ -41,6 +41,16 @@ export default class User {
     if (count === 4) return 4;
     if (count === 3) return 5;
     return null;
+  }
+
+  #calculateProfit(resultArr) {
+    const totalMoney = resultArr.reduce((acc, cur, index) => {
+      if (cur) {
+        return acc + REWARDS[index] * cur;
+      } else return acc;
+    }, 0);
+
+    return (Math.round((totalMoney / this.#money) * 100 * 100) / 100).toFixed(1);
   }
 
   #makeRandomLottoNumber() {

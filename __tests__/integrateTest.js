@@ -1,4 +1,4 @@
-import { runWithInput } from './helpers/testUtils.js';
+import { runWithInput } from '../test-helpers/testUtils.js';
 
 describe('로또 테스트', () => {
   beforeEach(() => {
@@ -18,7 +18,7 @@ describe('로또 테스트', () => {
     ];
     const inputs = ['8000', '1,2,3,4,5,6', '7'];
 
-    const logSpy = runWithInput(inputs, randoms);
+    const logSpy = await runWithInput(inputs, randoms);
 
     // then
     const logs = [

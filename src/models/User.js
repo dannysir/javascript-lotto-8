@@ -1,12 +1,13 @@
-import { Random } from "@woowacourse/mission-utils";
+import { Random } from '@woowacourse/mission-utils';
 import { Lotto } from './Lotto.js';
+import { ERROR, MIN_MONEY } from '../constants.js';
 
 export class User {
   #money;
   #lotto;
   constructor(money) {
     this.#validateMoney(money);
-    this.#money = money;
+    this.#money = +money;
     this.#lotto = [];
   }
 
@@ -26,5 +27,9 @@ export class User {
     return Random.pickUniqueNumbersInRange(1, 45, 6);
   }
 
-  #validateMoney(money) {}
+  #validateMoney(money) {
+    if (money.trim() !== money) throw new Error(ERROR.NO_SPACES);
+    if (isNaN(money)) throw new Error(ERROR.MONEY_NAN);
+    if (+money % MIN_MONEY !== 0) throw new Error(ERROR.MONEY_NOT_THOUSAND);
+  }
 }

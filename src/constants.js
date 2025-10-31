@@ -19,4 +19,8 @@ export const EMPTY = '';
 export const ERROR = {
   EMPTY_INPUT: '[ERROR] 입력을 해주세요.',
   NO_SPACES: '[ERROR] 공백이 포함되어 있습니다.',
+  MONEY_NAN: '[ERROR] 숫자만 입력해주세요.',
+  MONEY_NOT_THOUSAND: '[ERROR] 1,000원 단위로 입력해주세요.',
 };
+
+export const MIN_MONEY = 1_000;

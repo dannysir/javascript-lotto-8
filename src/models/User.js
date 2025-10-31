@@ -28,6 +28,3 @@ export class User {
 
   #validateMoney(money) {}
 }
-
-const tmp = new User(1000);
-

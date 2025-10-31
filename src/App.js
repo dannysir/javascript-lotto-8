@@ -1,8 +1,8 @@
 import { INPUT_QUESTION } from './constants.js';
-import { readInput } from './view/input.js';
 import Game from './models/Game.js';
 import User from './models/User.js';
-import { outputLottoBuy, outputResultReport } from './view/output.js';
+import { readInput } from './view/input.js';
+import { outputError, outputLottoBuy, outputResultReport } from './view/output.js';
 
 export default class App {
   async run() {
@@ -19,7 +19,8 @@ export default class App {
       const [resultArr, profit] = user.result(...game.getResult());
 
       outputResultReport(resultArr, profit);
-
-    } catch (error) {}
+    } catch (error) {
+      outputError(error);
+    }
   }
 }

@@ -1,5 +1,5 @@
-import { Console } from '@woowacourse/mission-utils';
 import { DELIMITER, OUTPUT, OUTPUT_PROFIT, OUTPUT_REPORT } from '../constants.js';
+import { Console } from '@woowacourse/mission-utils';
 
 export const outputLottoBuy = (lottos) => {
   const outputArr = ['\n' + lottos.length + OUTPUT.BUY_RESULT];
@@ -10,10 +10,16 @@ export const outputLottoBuy = (lottos) => {
 };
 
 export const outputResultReport = (resultArr, profit) => {
-  const outputArr = resultArr.map((value, index) => {
-    return OUTPUT_REPORT[index] + value + '개';
-  }).reverse();
+  const outputArr = resultArr
+    .map((value, index) => {
+      return OUTPUT_REPORT[index] + value + '개';
+    })
+    .reverse();
   outputArr.unshift(OUTPUT.RESULT_REPORT);
-  outputArr.push(OUTPUT_PROFIT(profit))
+  outputArr.push(OUTPUT_PROFIT(profit));
   Console.print(outputArr.join('\n'));
+};
+
+export const outputError = (error) => {
+  Console.print(error.message);
 };

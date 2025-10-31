@@ -1,6 +1,7 @@
 import { User } from '../src/models/User.js';
 import { Lotto } from '../src/models/Lotto.js';
 import { mockRandoms } from './helpers/mockUtils.js';
+import { Game } from '../src/models/Game.js';
 
 describe('User 모델', () => {
   test.each([['100'], ['1!99'], [' 100'], ['1001'], ['40001']])(
@@ -24,13 +25,59 @@ describe('User 모델', () => {
 
     expect(user.getLottoNumbers()).toEqual(randoms);
   });
+
+  test('로또 결과 반환', () => {
+    const money = 5_000;
+    const lottoWinNum = '1,2,3,4,5,6';
+    const bonusNum = '45';
+    const randoms = [
+      [1, 2, 3, 4, 5, 6],
+      [1, 2, 3, 4, 5, 45],
+      [1, 2, 3, 4, 10, 11],
+      [7, 8, 9, 10, 11, 12],
+      [13, 14, 15, 16, 17, 18],
+    ];
+    mockRandoms(randoms);
+
+    const game = new Game(lottoWinNum, bonusNum);
+    const user = new User(money);
+    user.buyLotto();
+
+    expect(user.result(...game.getWinNumber())).toEqual([1, 1, 0, 1, 0]);
+  });
 });
 
 describe('Lotto 모델', () => {
   test.each([
     ['로또 번호 갯수 6 초과', [1, 2, 3, 4, 5, 6, 7]],
     ['로또 번호 중복', [1, 2, 3, 4, 5, 5]],
-  ])('[예외 테스트] 로또 번호 %s - 입력 : %s', async (_, input) => {
-    await expect(() => new Lotto(input)).toThrow('[ERROR]');
+  ])('[예외 테스트] 로또 번호 %s - 입력 : %s', (_, input) => {
+    expect(() => new Lotto(input)).toThrow('[ERROR]');
+  });
+});
+
+describe('Game 모델', () => {
+  test.each([
+    ['당첨 번호 갯수 6 초과', '1,2,3,4,5,6,7'],
+    ['당첨 번호 갯수 6 미만', '1,2,3,4,5'],
+    ['당첨 번호 중복', '1,2,3,4,5,5'],
+    ['당첨 번호 숫자가 아닌값', '1,이,3,4,5,6'],
+    ['당첨 번호 숫자 범위 초과1', '1,2,3,4,5,400'],
+    ['당첨 번호 숫자 범위 초과2', '1,-2,3,4,5,6'],
+    ['당첨 번호 공백', '1,2, 3,4,5,6'],
+  ])('[예외 테스트] %s - 입력 : %s', (_, winNum) => {
+    expect(() => new Game(winNum)).toThrow('[ERROR]');
+  });
+
+  test.each([
+    ['보너스 번호 중복', '1,2,3,4,5,6', '1'],
+    ['보너스 번호 숫자가 아닌값', '1,2,3,4,5,6', '셋'],
+    ['보너스 번호 범위 초과1', '1,2,3,4,5,6', '455'],
+    ['보너스 번호 범위 초과2', '1,2,3,4,5,6', '0'],
+    ['보너스 번호 공백', '1,2, 3,4,5,6', '1 1'],
+  ])('[예외 테스트] %s - 입력 : %s, %s', (_, winNum, bonusNum) => {
+    const game = new Game(winNum);
+
+    expect(() => game.setBonusNumber(bonusNum)).toThrow('[ERROR]');
   });
 });

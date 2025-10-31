@@ -16,6 +16,12 @@ export class User {
     }
   }
 
+  getLottoNumbers() {
+    return this.#lotto.map((lotto) => {
+      return lotto.getNumbers();
+    });
+  }
+
   #makeRandomLottoNumber() {
     return Random.pickUniqueNumbersInRange(1, 45, 6);
   }

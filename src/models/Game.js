@@ -1,14 +1,13 @@
-import { Lotto } from './Lotto.js';
-import { DEFAULT_DELIMITER, ERROR } from '../constants.js';
+import Lotto from './Lotto.js';
+import { DELIMITER, ERROR } from '../constants.js';
 
-export class Game {
+export default class Game {
   #winLotto;
   #bonus;
   #duplicate;
   constructor(win) {
-    const winArr = win.split(DEFAULT_DELIMITER);
-    this.#validateLotto(winArr);
-    this.#winLotto = new Lotto(winArr.map(Number));
+    const winArr = win.split(DELIMITER.DEFAULT);
+    this.#winLotto = new Lotto(winArr);
     this.#duplicate = new Set(this.#winLotto.getNumbers());
   }
 
@@ -22,14 +21,9 @@ export class Game {
     return [new Set(this.#duplicate), this.#bonus];
   }
 
-  #validateLotto(winArr) {
-    winArr.forEach((num) => this.#validateNumber(num));
-  }
-
-  #validateNumber(num, isBonusNumber = false) {
-    if (num.trim() !== num) throw new Error(ERROR.NO_SPACES);
+  #validateNumber(num) {
     if (isNaN(num)) throw new Error(ERROR.NAN);
-    if (isBonusNumber && this.#duplicate.has(+num)) throw new Error(ERROR.DUPLICATE);
-    if (isBonusNumber && (+num < 1 || 45 < +num)) throw new Error(ERROR.NUMBER_OUT_RANGE);
+    if (this.#duplicate.has(+num)) throw new Error(ERROR.DUPLICATE);
+    if (+num < 1 || 45 < +num) throw new Error(ERROR.NUMBER_OUT_RANGE);
   }
 }

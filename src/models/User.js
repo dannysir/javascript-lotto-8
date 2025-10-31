@@ -1,20 +1,15 @@
 import { Random } from '@woowacourse/mission-utils';
-import { Lotto } from './Lotto.js';
+import Lotto from './Lotto.js';
 import { ERROR, MIN_MONEY, RESULT_SIZE } from '../constants.js';
 
-export class User {
+export default class User {
   #money;
   #lotto;
   constructor(money) {
     this.#validateMoney(money);
     this.#money = +money;
     this.#lotto = [];
-  }
-
-  buyLotto() {
-    for (let i = 0; i < this.#money / 1000; i++) {
-      this.#lotto.push(new Lotto(this.#makeRandomLottoNumber()));
-    }
+    this.#buyLotto();
   }
 
   getLottoNumbers() {
@@ -31,6 +26,12 @@ export class User {
       if (rank) resultArr[rank - 1]++;
     });
     return resultArr;
+  }
+
+  #buyLotto() {
+    for (let i = 0; i < this.#money / 1000; i++) {
+      this.#lotto.push(new Lotto(this.#makeRandomLottoNumber()));
+    }
   }
 
   #checkRank(count, isBonus) {

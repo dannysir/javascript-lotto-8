@@ -1,7 +1,7 @@
-import { User } from '../src/models/User.js';
-import { Lotto } from '../src/models/Lotto.js';
+import  User  from '../src/models/User.js';
+import Lotto  from '../src/models/Lotto.js';
 import { mockRandoms } from './helpers/mockUtils.js';
-import { Game } from '../src/models/Game.js';
+import Game  from '../src/models/Game.js';
 
 describe('User 모델', () => {
   test.each([['100'], ['1!99'], [' 100'], ['1001'], ['40001']])(
@@ -21,7 +21,6 @@ describe('User 모델', () => {
     mockRandoms(randoms);
 
     const user = new User(money);
-    user.buyLotto();
 
     expect(user.getLottoNumbers()).toEqual(randoms);
   });
@@ -42,7 +41,6 @@ describe('User 모델', () => {
     const game = new Game(lottoWinNum);
     game.setBonusNumber(bonusNum);
     const user = new User(money);
-    user.buyLotto();
 
     expect(user.result(...game.getResult())).toEqual([1, 1, 0, 1, 0]);
   });

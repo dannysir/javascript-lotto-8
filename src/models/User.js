@@ -29,7 +29,7 @@ export class User {
 
   #validateMoney(money) {
     if (money.trim() !== money) throw new Error(ERROR.NO_SPACES);
-    if (isNaN(money)) throw new Error(ERROR.MONEY_NAN);
+    if (isNaN(money)) throw new Error(ERROR.NAN);
     if (+money % MIN_MONEY !== 0) throw new Error(ERROR.MONEY_NOT_THOUSAND);
   }
 }

@@ -10,9 +10,9 @@ export class App {
       const user = new User(input1)
 
       const input2 = await readInput(INPUT_QUESTION.SECOND);
+      const game = new Game(input2);
       const input3 = await readInput(INPUT_QUESTION.THIRD);
-      const game = new Game(input2, input3);
-
+      game.setBonusNumber(input3);
 
     } catch (error) {
     }

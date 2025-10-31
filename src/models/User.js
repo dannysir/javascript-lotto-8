@@ -1,6 +1,6 @@
+import { ERROR, MIN_MONEY, RESULT_SIZE, REWARDS } from '../constants.js';
 import { Random } from '@woowacourse/mission-utils';
 import Lotto from './Lotto.js';
-import { ERROR, MIN_MONEY, RESULT_SIZE, REWARDS } from '../constants.js';
 
 export default class User {
   #money;

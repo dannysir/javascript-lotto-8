@@ -41,5 +41,5 @@ export const DELIMITER = {
 export const RESULT_SIZE = 5;
 
 export const OUTPUT_PROFIT = (profit) => {
-  return `총 수익률은 ${profit.toLocaleString()}%입니다.`
+  return `총 수익률은 ${profit.toLocaleString()}%입니다.`;
 };

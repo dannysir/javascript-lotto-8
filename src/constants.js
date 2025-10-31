@@ -19,8 +19,13 @@ export const EMPTY = '';
 export const ERROR = {
   EMPTY_INPUT: '[ERROR] 입력을 해주세요.',
   NO_SPACES: '[ERROR] 공백이 포함되어 있습니다.',
-  MONEY_NAN: '[ERROR] 숫자만 입력해주세요.',
+  NAN: '[ERROR] 숫자만 입력해주세요.',
   MONEY_NOT_THOUSAND: '[ERROR] 1,000원 단위로 입력해주세요.',
+  LOTTO_WRONG_SIZE: '[ERROR] 로또 번호는 6개여야 합니다.',
+  DUPLICATE: '[ERROR] 중복된 숫자가 포합되었습니다.',
+  NUMBER_OUT_RANGE: '[ERROR] 1 ~ 45 사이의 숫자만 입력해주세요.',
 };
 
 export const MIN_MONEY = 1_000;
+
+export const DEFAULT_DELIMITER = ',';

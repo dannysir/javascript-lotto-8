@@ -1,3 +1,5 @@
+import { ERROR } from '../constants.js';
+
 export class Lotto {
   #numbers;
 
@@ -7,9 +9,8 @@ export class Lotto {
   }
 
   #validate(numbers) {
-    if (numbers.length !== 6) {
-      throw new Error('[ERROR] 로또 번호는 6개여야 합니다.');
-    }
+    if (numbers.length !== 6) throw new Error(ERROR.LOTTO_WRONG_SIZE);
+    if (new Set(numbers).size !== numbers.length) throw new Error(ERROR.DUPLICATE);
   }
 
   getNumbers() {

@@ -1,26 +1,50 @@
-import { INPUT_QUESTION } from './constants.js';
 import Game from './models/Game.js';
 import User from './models/User.js';
-import { readInput } from './view/input.js';
-import { outputError, outputLottoBuy, outputResultReport } from './view/output.js';
+import Input from './view/Input.js';
+import Output from './view/Output.js';
 
 export default class App {
+  #input;
+  #output;
+
+  constructor() {
+    this.#input = new Input();
+    this.#output = new Output();
+  }
+
   async run() {
     try {
-      const input1 = await readInput(INPUT_QUESTION.FIRST);
-      const user = new User(input1);
+      const user = await this.#createUser();
+      const game = await this.#createGame();
 
-      outputLottoBuy(user.getLottoNumbers());
-
-      const input2 = await readInput(INPUT_QUESTION.SECOND);
-      const game = new Game(input2);
-      const input3 = await readInput(INPUT_QUESTION.THIRD);
-      game.setBonusNumber(input3);
-      const [resultArr, profit] = user.result(...game.getResult());
-
-      outputResultReport(resultArr, profit);
+      this.#displayResult(user, game);
     } catch (error) {
-      outputError(error);
+      this.#output.printError(error);
     }
+  }
+
+  async #createUser() {
+    const purchaseAmount = await this.#input.getPurchaseAmount();
+    const user = new User(purchaseAmount);
+
+    this.#output.printLottoBought(user.getLottoNumbers());
+
+    return user;
+  }
+
+  async #createGame() {
+    const winningNumbers = await this.#input.getWinningNumbers();
+    const game = new Game(winningNumbers);
+
+    const bonusNumber = await this.#input.getBonusNumber();
+    game.setBonusNumber(bonusNumber);
+
+    return game;
+  }
+
+  #displayResult(user, game) {
+    const [resultArr, profit] = user.result(...game.getResult());
+
+    this.#output.printResult(resultArr, profit);
   }
 }

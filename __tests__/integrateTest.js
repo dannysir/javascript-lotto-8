@@ -20,7 +20,6 @@ describe('로또 테스트', () => {
 
     const logSpy = await runWithInput(inputs, randoms);
 
-    // then
     const logs = [
       '8개를 구매했습니다.',
       '[8, 21, 23, 41, 42, 43]',
@@ -44,8 +43,34 @@ describe('로또 테스트', () => {
     });
   });
 
-  test('예외 테스트', async () => {
-    const logSpy = await runWithInput(['1000j']);
-    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('[ERROR]'));
+
+  describe('예외 테스트', () => {
+    test.each([
+      ['1001', '1,2,3,4,5,6', '45'],
+      ['1', '1,2,3,4,5,6', '45'],
+      ['6000', '-1,2,3,4,5,6', '45'],
+      ['6000', '1,2,3,4,5,60', '45'],
+      ['6000', '1,2,,4,5,6', '45'],
+      ['6000', '1,2,십일,4,5,6', '45'],
+      ['6000', '1,2,3,4,5,6', '-1'],
+      ['6000', '1,2,3,4,5,6', '일'],
+      ['6000', '1,2,3,4,5,6', '100'],
+    ])('[입력 예외] - 금액 : %s, 로또 번호 : %s, 보너스 번호 : %s', async (money, win, bonus) => {
+      const input = [money, win, bonus];
+      const randoms = [
+        [8, 21, 23, 41, 42, 43],
+        [3, 5, 11, 16, 32, 38],
+        [7, 11, 16, 35, 36, 44],
+        [1, 8, 11, 31, 41, 42],
+        [13, 14, 16, 38, 42, 45],
+        [7, 11, 30, 40, 42, 43],
+        [2, 13, 22, 32, 38, 45],
+        [1, 3, 5, 14, 22, 45],
+      ];
+
+      const logSpy = await runWithInput(input, randoms);
+
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('[ERROR]'));
+    });
   });
 });

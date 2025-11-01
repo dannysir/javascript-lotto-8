@@ -1,5 +1,5 @@
-import Game from './models/Game.js';
-import User from './models/User.js';
+import Game from './models/Game/Game.js';
+import User from './models/User/User.js';
 import Input from './view/Input.js';
 import Output from './view/Output.js';
 

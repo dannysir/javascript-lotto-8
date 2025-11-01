@@ -1,5 +1,5 @@
-import { DELIMITER, ERROR } from '../constants.js';
-import Lotto from './Lotto.js';
+import { DELIMITER, ERROR } from '../../constants.js';
+import Lotto from '../Lotto/Lotto.js';
 
 export default class Game {
   #winLotto;

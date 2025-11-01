@@ -1,0 +1,25 @@
+import { mockRandoms } from '../../../test-helpers/mockUtils.js';
+import User from './User.js';
+
+describe('User 모델', () => {
+  test.each([['100'], ['1!99'], [' 100'], ['1001'], ['40001']])(
+    '[예외 테스트] 잘못된 금액 - 입력 : %s',
+    async (input) => {
+      await expect(() => new User(input)).toThrow('[ERROR]');
+    }
+  );
+
+  test('3개의 로또 생성', () => {
+    const money = '3000';
+    const randoms = [
+      [1, 2, 3, 4, 5, 6],
+      [3, 12, 18, 27, 35, 41],
+      [1, 8, 15, 22, 39, 44],
+    ];
+    mockRandoms(randoms);
+
+    const user = new User(money);
+
+    expect(user.getLottoNumbers()).toEqual(randoms);
+  });
+});

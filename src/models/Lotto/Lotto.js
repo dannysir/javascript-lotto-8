@@ -22,9 +22,13 @@ export default class Lotto {
 
   check(duplicate, bonus) {
     const count = this.#numbers.reduce((acc, cur) => {
-      return duplicate.has(cur) ? acc + 1 : acc;
+      if (duplicate.has(cur)) {
+        return acc + 1;
+      }
+      return acc;
     }, 0);
     const isBonus = this.#numbers.includes(bonus);
+
     return [count, isBonus];
   }
 }

@@ -37,6 +37,7 @@ export default class User {
   #checkRank(count, isBonus) {
     if (count === 6 && isBonus) return 2;
     if (count === 6) return 1;
+    if (isBonus) count--;
     if (count === 5) return 3;
     if (count === 4) return 4;
     if (count === 3) return 5;
@@ -47,7 +48,8 @@ export default class User {
     const totalMoney = resultArr.reduce((acc, cur, index) => {
       if (cur) {
         return acc + REWARDS[index] * cur;
-      } else return acc;
+      }
+      return acc;
     }, 0);
 
     return (Math.round((totalMoney / this.#money) * 100 * 100) / 100).toFixed(1);

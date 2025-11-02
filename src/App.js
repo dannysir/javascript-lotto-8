@@ -13,33 +13,58 @@ export default class App {
   }
 
   async run() {
-    try {
-      const user = await this.#createUser();
-      const game = await this.#createGame();
+    const user = await this.#createUser();
+    const game = await this.#createGame();
 
-      this.#displayResult(user, game);
-    } catch (error) {
-      this.#output.printError(error);
-    }
+    this.#displayResult(user, game);
   }
 
   async #createUser() {
-    const purchaseAmount = await this.#input.getPurchaseAmount();
-    const user = new User(purchaseAmount);
-
+    const user = await this.#getUserWithPurchaseAmount();
     this.#output.printLottoBought(user.getLottoNumbers());
 
     return user;
   }
 
   async #createGame() {
-    const winningNumbers = await this.#input.getWinningNumbers();
-    const game = new Game(winningNumbers);
-
-    const bonusNumber = await this.#input.getBonusNumber();
-    game.setBonusNumber(bonusNumber);
+    const game = await this.#getGameAndWinNum();
+    await this.#setBonusNumberToGame(game);
 
     return game;
+  }
+
+  async #getUserWithPurchaseAmount() {
+    while (true) {
+      try {
+        const purchaseAmount = await this.#input.getPurchaseAmount();
+        return new User(purchaseAmount);
+      } catch (error) {
+        this.#output.printError(error);
+      }
+    }
+  }
+
+  async #getGameAndWinNum() {
+    while (true) {
+      try {
+        const winningNumbers = await this.#input.getWinningNumbers();
+        return new Game(winningNumbers);
+      } catch (error) {
+        this.#output.printError(error);
+      }
+    }
+  }
+
+  async #setBonusNumberToGame(game) {
+    while (true) {
+      try {
+        const bonusNumber = await this.#input.getBonusNumber();
+        game.setBonusNumber(bonusNumber);
+        return;
+      } catch (error) {
+        this.#output.printError(error);
+      }
+    }
   }
 
   #displayResult(user, game) {

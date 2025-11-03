@@ -1,4 +1,4 @@
-import { ERROR, MIN_MONEY, RESULT_SIZE, REWARDS } from '../../constants.js';
+import { ERROR, LOTTO, RESULT_SIZE, REWARDS } from '../../constants.js';
 import { Random } from '@woowacourse/mission-utils';
 import Lotto from '../Lotto/Lotto.js';
 
@@ -29,7 +29,7 @@ export default class User {
   }
 
   #buyLotto() {
-    for (let i = 0; i < this.#money / 1000; i++) {
+    for (let i = 0; i < this.#money / LOTTO.PRICE; i++) {
       this.#lotto.push(new Lotto(this.#makeRandomLottoNumber()));
     }
   }
@@ -56,12 +56,12 @@ export default class User {
   }
 
   #makeRandomLottoNumber() {
-    return Random.pickUniqueNumbersInRange(1, 45, 6);
+    return Random.pickUniqueNumbersInRange(LOTTO.NUM_RANGE_START, LOTTO.NUM_RANGE_END, LOTTO.LENGTH);
   }
 
   #validateMoney(money) {
     if (money.trim() !== money) throw new Error(ERROR.NO_SPACES);
     if (isNaN(money)) throw new Error(ERROR.NAN);
-    if (+money % MIN_MONEY !== 0) throw new Error(ERROR.MONEY_NOT_THOUSAND);
+    if (+money % LOTTO.PRICE !== 0) throw new Error(ERROR.MONEY_NOT_THOUSAND);
   }
 }

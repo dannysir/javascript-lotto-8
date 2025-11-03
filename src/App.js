@@ -20,7 +20,7 @@ export default class App {
   }
 
   async #createUser() {
-    const user = await this.#getUserWithPurchaseAmount();
+    const user = await this.#getUserAndMoney();
     this.#output.printLottoBought(user.getLottoNumbers());
 
     return user;
@@ -33,7 +33,7 @@ export default class App {
     return game;
   }
 
-  async #getUserWithPurchaseAmount() {
+  async #getUserAndMoney() {
     while (true) {
       try {
         const purchaseAmount = await this.#input.getPurchaseAmount();

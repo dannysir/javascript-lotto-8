@@ -1,4 +1,4 @@
-import { ERROR } from '../../constants.js';
+import { ERROR, LOTTO } from '../../constants.js';
 
 export default class Lotto {
   #numbers;
@@ -11,9 +11,9 @@ export default class Lotto {
   #validate(numbers) {
     if (numbers.some((value) => String(value).trim() !== String(value)) ) throw new Error(ERROR.NO_SPACES);
     if (numbers.some((value) => isNaN(value))) throw new Error(ERROR.NAN);
-    if (numbers.length !== 6) throw new Error(ERROR.LOTTO_WRONG_SIZE);
+    if (numbers.length !== LOTTO.LENGTH) throw new Error(ERROR.LOTTO_WRONG_SIZE);
     if (new Set(numbers).size !== numbers.length) throw new Error(ERROR.DUPLICATE);
-    if (numbers.some((value) => value < 1 || 45 < value)) throw new Error(ERROR.NUMBER_OUT_RANGE);
+    if (numbers.some((value) => value < LOTTO.NUM_RANGE_START || LOTTO.NUM_RANGE_END < value)) throw new Error(ERROR.NUMBER_OUT_RANGE);
   }
 
   getNumbers() {

@@ -1,4 +1,4 @@
-import { DELIMITER, ERROR } from '../../constants.js';
+import { DELIMITER, ERROR, LOTTO } from '../../constants.js';
 import Lotto from '../Lotto/Lotto.js';
 
 export default class Game {
@@ -24,6 +24,6 @@ export default class Game {
   #validateNumber(num) {
     if (isNaN(num)) throw new Error(ERROR.NAN);
     if (this.#duplicate.has(+num)) throw new Error(ERROR.DUPLICATE);
-    if (+num < 1 || 45 < +num) throw new Error(ERROR.NUMBER_OUT_RANGE);
+    if (+num < LOTTO.NUM_RANGE_START || LOTTO.NUM_RANGE_END < +num) throw new Error(ERROR.NUMBER_OUT_RANGE);
   }
 }
